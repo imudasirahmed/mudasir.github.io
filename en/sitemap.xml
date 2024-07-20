@@ -2,16 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/mudasir.github.io/en/about/about/</loc>
-    <lastmod>2024-07-20T13:51:28-05:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/mudasir.github.io/en/about/</loc>
-    <lastmod>2024-07-20T13:51:28-05:00</lastmod>
+    <loc>http://localhost:1313/mudasir.github.io/en/posts/catalogs-in-ua-kit/</loc>
+    <lastmod>2024-07-20T13:39:19-05:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/mudasir.github.io/en/</loc>
-    <lastmod>2024-07-20T13:51:28-05:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/mudasir.github.io/en/posts/catalogs-in-ua-kit/</loc>
     <lastmod>2024-07-20T13:39:19-05:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/mudasir.github.io/en/posts/</loc>
@@ -22,5 +16,7 @@
   </url><url>
     <loc>http://localhost:1313/mudasir.github.io/en/tags/untagged/</loc>
     <lastmod>2024-07-20T13:39:19-05:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/mudasir.github.io/en/about/</loc>
   </url>
 </urlset>
