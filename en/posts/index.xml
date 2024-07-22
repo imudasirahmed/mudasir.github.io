@@ -1,26 +1,49 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>Posts on Mudasir Blog Site</title>
+		<title>Posts on Mudasir&#39;s Blog</title>
 		<link>https://mudasir.co/en/posts/</link>
-		<description>Recent content in Posts on Mudasir Blog Site</description>
+		<description>Recent content in Posts on Mudasir&#39;s Blog</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>en-us</language>
 		<copyright>Mudasir</copyright>
-		<lastBuildDate>Sat, 20 Jul 2024 13:39:19 -0500</lastBuildDate>
+		<lastBuildDate>Mon, 22 Jul 2024 16:22:31 -0500</lastBuildDate>
 		<atom:link href="https://mudasir.co/en/posts/index.xml" rel="self" type="application/rss+xml" />
 		
 		<item>
-			<title>Catalogs in UA Kit</title>
+			<title>Crowdstrike Outage</title>
+			<link>https://mudasir.co/en/posts/crowd_strike/</link>
+			<pubDate>Mon, 22 Jul 2024 16:22:31 -0500</pubDate>
+			
+			<guid>https://mudasir.co/en/posts/crowd_strike/</guid>
+			<description><![CDATA[%!s(<nil>)]]></description>
+			<content type="html"><![CDATA[<h2 id="what-exactly-happened-with-crowdstrike-outage">What exactly happened with #Crowdstrike outage</h2>
+<h3 id="programmer-error">Programmer Error</h3>
+<p>A #CrowdStrike developer made a mistake while writing code in C++.</p>
+<h3 id="null-pointer-creation">Null Pointer Creation</h3>
+<p>The code created a pointer variable (Obj* obj) that should have pointed to a specific object in memory containing data. However, due to the error, the pointer remained NULL - meaning it wasn&rsquo;t actually pointing to any valid memory location.</p>
+<h3 id="missing-null-check">Missing Null Check</h3>
+<p>The code tried to use this null pointer (obj) to access information within the object it was supposed to represent. Normally, programmers would check if the pointer is null before using it (like if (obj == NULL) { &hellip; }), but this check was missing.</p>
+<h3 id="attempting-to-access-nothing">Attempting to Access &ldquo;Nothing&rdquo;</h3>
+<p>Because the pointer was null, it essentially pointed to &ldquo;nothing&rdquo; in memory. When the code tried to access member variables of the object (like obj-&gt;a or obj-&gt;b), it was attempting to read data from an invalid memory address calculated based on the null pointer value (e.g., 0x0 + 4).  In the attached snapshot (stack dump), you can see that it is trying to access 0x9c which is invalid. Programmer has forgot to check the validity of the objects and it was eventually &ldquo;NULL + 0x9C = 0x9C&rdquo;. That&rsquo;s an invalid region of memory.</p>
+<h3 id="memory-access-violation">Memory Access Violation</h3>
+<p>Since the program was trying to access memory it wasn&rsquo;t supposed to, Windows recognized this as a potential security threat. To protect the system, Windows crashed the program entirely, resulting in the Blue Screen of Death (BSOD) and the outage.<br>
+Essentially, the code tried to read data from nowhere in memory, which triggered a system crash as a safety measure</p>
+<p><img src="/images/crowd_strike.png" alt="Crowd Strike Console"></p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Introduction to Combine</title>
 			<link>https://mudasir.co/en/posts/catalogs-in-ua-kit/</link>
 			<pubDate>Sat, 20 Jul 2024 13:39:19 -0500</pubDate>
 			
 			<guid>https://mudasir.co/en/posts/catalogs-in-ua-kit/</guid>
 			<description><![CDATA[%!s(<nil>)]]></description>
-			<content type="html"><![CDATA[<h1 id="discuss-catalog-entries-in-ui-kit">Discuss Catalog entries in UI-Kit</h1>
-<h2 id="tesing-the-code-1-2-3">Tesing the code 1 2 3</h2>
-<p>Bacon ipsum dolor amet cow short loin salami, corned beef cupim pig tenderloin andouille. Porchetta salami tongue chicken burgdoggen ham sirloin boudin. Ribeye kevin short loin landjaeger ground round pork chop turducken fatback sausage pork belly. Corned beef picanha strip steak beef ham hock andouille landjaeger ribeye meatball pork chop chicken alcatra. Hamburger pork chop filet mignon pancetta kevin tail brisket fatback cupim meatball. Brisket boudin bacon pancetta tail porchetta, pig filet mignon cupim hamburger buffalo biltong t-bone venison. Pastrami shoulder brisket tri-tip cow</p>
-<h2 id="tesing-the-code-4-5-6">Tesing the code 4 5 6</h2>
-<p>Bacon ipsum dolor amet cow short loin salami, corned beef cupim pig tenderloin andouille. Porchetta salami tongue chicken burgdoggen ham sirloin boudin. Ribeye kevin short loin landjaeger ground round pork chop turducken fatback sausage pork belly. Corned beef picanha strip steak beef ham hock andouille landjaeger ribeye meatball pork chop chicken alcatra. Hamburger pork chop filet mignon pancetta kevin tail brisket fatback cupim meatball. Brisket boudin bacon pancetta tail porchetta, pig filet mignon cupim hamburger buffalo biltong t-bone venison. Pastrami shoulder brisket tri-tip cow</p>
+			<content type="html"><![CDATA[<h1 id="what-is-combine">What is Combine?</h1>
+<h2 id="intro-to-combine">Intro to Combine</h2>
+<p>Combine is a framework introduced by Apple in iOS 13 for handling asynchronous events in a declarative way. It allows developers to process values over time, such as user input or data from a network request, using a consistent and concise syntax. At its core, Combine uses publishers and subscribers to manage the flow of data. Publishers emit values and events, while subscribers receive and handle them. This setup makes it easier to manage complex chains of events, transform data, and handle errors, reducing the need for callback-based code and making the code more readable and maintainable.</p>
+<h2 id="key-features">Key features</h2>
+<p>One of the key features of Combine is its ability to chain multiple operators to process data streams. For example, you can fetch data from an API, decode the JSON response, and update the UI—all with a few lines of code. Combine also integrates seamlessly with Swift’s Codable system, making it straightforward to work with custom data types. Additionally, Combine provides powerful tools for handling errors, allowing you to retry failed operations, provide fallback values, or handle errors gracefully. Overall, Combine simplifies the development of reactive and responsive iOS applications, making it an essential tool for modern iOS development.</p>
 ]]></content>
 		</item>
 		
