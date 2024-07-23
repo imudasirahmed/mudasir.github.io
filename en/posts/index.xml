@@ -39,11 +39,140 @@ Essentially, the code tried to read data from nowhere in memory, which triggered
 			
 			<guid>https://mudasir.co/en/posts/catalogs-in-ua-kit/</guid>
 			<description><![CDATA[%!s(<nil>)]]></description>
-			<content type="html"><![CDATA[<h1 id="what-is-combine">What is Combine?</h1>
-<h2 id="intro-to-combine">Intro to Combine</h2>
-<p>Combine is a framework introduced by Apple in iOS 13 for handling asynchronous events in a declarative way. It allows developers to process values over time, such as user input or data from a network request, using a consistent and concise syntax. At its core, Combine uses publishers and subscribers to manage the flow of data. Publishers emit values and events, while subscribers receive and handle them. This setup makes it easier to manage complex chains of events, transform data, and handle errors, reducing the need for callback-based code and making the code more readable and maintainable.</p>
-<h2 id="key-features">Key features</h2>
-<p>One of the key features of Combine is its ability to chain multiple operators to process data streams. For example, you can fetch data from an API, decode the JSON response, and update the UI—all with a few lines of code. Combine also integrates seamlessly with Swift’s Codable system, making it straightforward to work with custom data types. Additionally, Combine provides powerful tools for handling errors, allowing you to retry failed operations, provide fallback values, or handle errors gracefully. Overall, Combine simplifies the development of reactive and responsive iOS applications, making it an essential tool for modern iOS development.</p>
+			<content type="html"><![CDATA[<h2 id="core-concepts">Core Concepts</h2>
+<p>There are only a few core concepts that you need to know to use Combine effectively, but they are very important to understand.
+Here&rsquo;s an example:</p>
+<pre tabindex="0"><code>- Publisher and Subscriber
+- Opertators
+- Subjects
+</code></pre><h2 id="publisher--subscriber">Publisher &amp; Subscriber</h2>
+<h3 id="what-is-a-publisher">What is a Publisher</h3>
+<ul>
+<li>A publisher provides data when available and upon request.</li>
+<li>A publisher that has not had any subscription requests will not provide any data.</li>
+<li>These are often written using the generics syntax which uses the &lt; and &gt; symbol around text describing the types.</li>
+</ul>
+<p><img src="/images/1.png" alt="Crowd Strike Console"></p>
+<h3 id="what-is-a-subscriber">What is a Subscriber</h3>
+<ul>
+<li>A subscriber is responsible for requesting data and accepting the data (and possible failures) provided by a publisher.</li>
+<li>A subscriber is described with two associated types, one for Input and one for Failure</li>
+<li>The subscriber initiates the request for data, and controls the amount of data it receives</li>
+</ul>
+<p><img src="/images/2.png" alt="Crowd Strike Console"></p>
+<h3 id="what-is-a-subscription">What is a Subscription</h3>
+<ul>
+<li>Publishers and subscribers are meant to be connected, and make up the core of Combine. This combinbation is called a Subscription</li>
+</ul>
+<p><img src="/images/3.png" alt="Crowd Strike Console"></p>
+<h3 id="what-is-an-operator">What is an Operator</h3>
+<ul>
+<li>An object that acts both like a subscriber and a publisher.</li>
+<li>Operators are classes that adopt both the Subscriber protocol and Publisher protocol</li>
+<li>They support subscribing to a publisher, and sending results to any subscribers.</li>
+<li>Operator, tryOperator
+<ul>
+<li>map, tryMap</li>
+<li>The map operator allows for any combination of Output and Failure type and passes them through</li>
+<li>tryMap accepts any Input, Failure types, and allows any Output type, but will always output an <!-- raw HTML omitted --> failure type</li>
+</ul>
+</li>
+</ul>
+<h3 id="what-is-a-pipeline">What is a Pipeline</h3>
+<ul>
+<li>Create chains of these together, for processing, reacting, and transforming the data provided by a publisher, and requested by the subscriber is what is called a Pipeline</li>
+</ul>
+<p><img src="/images/4.png" alt="Crowd Strike Console"></p>
+<pre tabindex="0"><code>let _ = Just(5)
+    .map { value -&gt; String in
+        
+        // do something with the incoming value here 
+        // and return a string
+        return &#34;a string&#34;
+    }
+    .sink { receivedValue in
+        // sink is the subscriber and terminates the pipeline
+        print(&#34;The end result was \(receivedValue)&#34;)
+    }
+</code></pre><h2 id="describing-pipeline-with-marble-diagram">Describing Pipeline with Marble Diagram</h2>
+<p>Marble diagrams focus on describing how a specific pipeline changes the stream of data</p>
+<pre tabindex="0"><code>let _ = Just(5)
+    .map { value -&gt; String in 1
+        switch value {
+        case _ where value &lt; 1:
+            return &#34;none&#34;
+        case _ where value == 1:
+            return &#34;one&#34;
+        case _ where value == 2:
+            return &#34;couple&#34;
+        case _ where value == 3:
+            return &#34;few&#34;
+        case _ where value &gt; 8:
+            return &#34;many&#34; default:
+            return &#34;some&#34; }
+    }
+    .sink { receivedValue in
+        print(&#34;The end result was \(receivedValue)&#34;) }
+</code></pre><h2 id="backpressure">BackPressure</h2>
+<p>Combine is designed such that the subscriber controls the flow of data - this feature in Combine is called back-pressure. so what does that mean:</p>
+<ul>
+<li>This means that the subscriber drives the processing within a pipeline by providing information about how much information it wants or can accept. When a subscriber is connected to a publisher, it requests data based on a specific Demand.</li>
+</ul>
+<p><img src="/images/5.png" alt="Crowd Strike Console"></p>
+<h2 id="publishers">Publishers</h2>
+<ul>
+<li>Standard Publishers: this publisher will immediately provide data when requested by a subscriber</li>
+<li>ConnectablePublisher:  this publisher may have a separate mechanism to enable it to return data after subscription
+<ul>
+<li>.connect() call on the publisher itself.</li>
+<li>.autoconnect() call, which will start the flow of data as soon as a subscriber requests it</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Publishers</th>
+<th style="text-align:center"></th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Just</td>
+<td style="text-align:center">Future</td>
+<td style="text-align:right">Deffered</td>
+</tr>
+<tr>
+<td style="text-align:left">Empty</td>
+<td style="text-align:center">Sequence</td>
+<td style="text-align:right">Fail</td>
+</tr>
+<tr>
+<td style="text-align:left">Record</td>
+<td style="text-align:center">Share</td>
+<td style="text-align:right">Multicase</td>
+</tr>
+<tr>
+<td style="text-align:left">Observable</td>
+<td style="text-align:center">@Published</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">@Published</td>
+<td style="text-align:center">@ObservedObject</td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="subject">Subject</h2>
+<ul>
+<li>Subjects are a special case of publisher that also adhere to the Subject protocol.</li>
+<li>This protocol requires subjects to have a .send(_:) method to allow the developer to send specific values to a subscriber (or pipeline).</li>
+<li>CurrentValueSubject</li>
+<li>PassthroughSubject</li>
+<li>Both CurrentValueSubject and PassthroughSubject are also useful for creating publishers for objects conforming to ObservableObject</li>
+</ul>
 ]]></content>
 		</item>
 		

@@ -21,7 +21,7 @@
       <link>https://mudasir.co/en/posts/catalogs-in-ua-kit/</link>
       <pubDate>Sat, 20 Jul 2024 13:39:19 -0500</pubDate>
       <guid>https://mudasir.co/en/posts/catalogs-in-ua-kit/</guid>
-      <description>What is Combine? Intro to Combine Combine is a framework introduced by Apple in iOS 13 for handling asynchronous events in a declarative way. It allows developers to process values over time, such as user input or data from a network request, using a consistent and concise syntax. At its core, Combine uses publishers and subscribers to manage the flow of data. Publishers emit values and events, while subscribers receive and handle them.</description>
+      <description>Core Concepts There are only a few core concepts that you need to know to use Combine effectively, but they are very important to understand. Here&amp;rsquo;s an example:&#xA;- Publisher and Subscriber - Opertators - Subjects Publisher &amp;amp; Subscriber What is a Publisher A publisher provides data when available and upon request. A publisher that has not had any subscription requests will not provide any data. These are often written using the generics syntax which uses the &amp;lt; and &amp;gt; symbol around text describing the types.</description>
     </item>
     <item>
       <title></title>
